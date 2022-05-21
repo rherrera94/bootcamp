@@ -3,7 +3,18 @@ import prisma from 'lib/prisma'
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    //find all the trips
     const trips = await prisma.trip.findMany()
+    //inside all the trips will go the expenses of that trip
+    await Promise.all(
+      trips.map(async (trip) => {
+        trip.expenses = await prisma.expense.findMany({
+          where: {
+            trip: trip.id,
+          },
+        })
+      })
+    )
     return res.status(200).json(trips)
   }
 
