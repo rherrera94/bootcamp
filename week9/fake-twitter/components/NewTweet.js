@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export default function NewTweet() {
   //el setContent lo que hara es asignarle un valor a content el cual por defecto sera ''
   const [content, setContent] = useState('')
   const { data: session } = useSession()
-
+  const router = useRouter()
   if (!session || !session.user) return null
 
   return (
@@ -18,7 +19,8 @@ export default function NewTweet() {
           return
         }
         //el fetch este lo que hara es mandar una peticion POST a /api/tweet
-        fetch('/api/tweet', {
+        //se necesita poner await para que cada vez que yo ingrese un nuevo tweet me aparezca al toque
+        await fetch('/api/tweet', {
           body: JSON.stringify({
             content,
           }),
@@ -27,6 +29,7 @@ export default function NewTweet() {
           },
           method: 'POST',
         })
+        router.reload(window.location.pathname)
       }}
     >
       <div className='flex'>
