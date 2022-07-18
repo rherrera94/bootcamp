@@ -17,6 +17,7 @@ model User {
   username      String?   @unique
   emailVerified DateTime?
   image         String?
+  company       Boolean @default(false) 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
