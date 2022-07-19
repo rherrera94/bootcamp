@@ -1,15 +1,25 @@
-import Head from 'next/head'
+import Jobs from 'components/Jobs'
+import prisma from 'lib/prisma'
+import { getJobs } from 'lib/data.js'
 
-export default function Home() {
+export default function Home({ jobs }) {
   return (
-    <div>
-      <Head>
-        <title></title>
-        <meta name='description' content='' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-
-      <h1>Welcome!</h1>
+    <div className='mt-10'>
+      <div className='text-center p-4 m-4'>
+        <h2 className='mb-10 text-4xl font-bold'>Find a job!</h2>
+      </div>
+      <Jobs jobs={jobs} />
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  let jobs = await getJobs(prisma)
+	jobs = JSON.parse(JSON.stringify(jobs))
+
+  return {
+    props: {
+      jobs,
+    },
+  }
 }
