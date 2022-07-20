@@ -44,6 +44,7 @@ export const getJob = async (id, prisma) => {
  * @returns devuelve la compañia buscada
  */
 export const getCompany = async (company_id, prisma) => {
+  //en este caso el company_id no tiene el parseint ya que es un string
   const user = await prisma.user.findUnique({
     where: {
       id: company_id,
