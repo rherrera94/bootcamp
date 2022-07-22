@@ -73,3 +73,17 @@ export const getCompanyJobs = async (company_id, prisma) => {
   })
   return jobs
 }
+/**
+ * Función que me devolverá el usuario solicitado según su id
+ * @param {*} id id de usuario a encontrar
+ * @param {*} prisma 
+ * @returns devuelve el usuario que busco si es que se encuentra
+ */
+export const getUser = async (id, prisma) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  })
+  return user
+}
