@@ -2,7 +2,7 @@ import { getJob } from 'lib/data'
 import prisma from 'lib/prisma'
 import Link from 'next/link'
 
-export default function Job({ job }) {
+export default function Job({ job, isDashboard }) {
     return (
       <div className='flex flex-col w-1/2 mx-auto'>
         <div className='text-center p-4 m-4'>

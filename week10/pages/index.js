@@ -44,10 +44,11 @@ export default function Home({ jobs,user }) {
 	            click here to post a new job
 	          </button>
           </Link>
-          <button
-          className='ml-5 border px-8 py-2 mt-5 font-bold rounded-full bg-black text-white border-black '>
-            see all the jobs you posted
-          </button>
+          <Link href={`/dashboard`}>
+            <button className='ml-5 border px-8 py-2 mt-5 font-bold rounded-full bg-black text-white border-black '>
+              see all the jobs you posted
+            </button>
+          </Link>
         </>
       ) : (
         <>
@@ -59,6 +60,7 @@ export default function Home({ jobs,user }) {
       )}
     </>
   )}
+
   <Jobs jobs={jobs} />
   </div>
   )

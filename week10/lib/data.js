@@ -87,3 +87,27 @@ export const getUser = async (id, prisma) => {
   })
   return user
 }
+/**
+ * Los usuarios pueden necesitar para el dashboard mostrar en un sector
+ * los trabajos que esten publicados en el momento y los que no lo estan
+ * por lo que se hace necesario tener una busqueda que no solo pida los avisos
+ * activos sino tambien los demas
+ * @param {*} user_id La empresa que publico los anuncios
+ * @param {*} prisma 
+ * @returns Array con los anuncios sin distinguir la situacion de publicacion
+ */
+ export const getJobsPosted = async (user_id, prisma) => {
+  const jobs = await prisma.job.findMany({
+    where: { authorId: user_id },
+    orderBy: [
+      {
+        id: 'desc',
+      },
+    ],
+    include: {
+      author: true,
+    },
+  })
+
+  return jobs
+}
