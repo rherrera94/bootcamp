@@ -33,6 +33,13 @@ export default function Job({ job, isDashboard }) {
                     </Link>
                   </span>
                 </div>
+                <div className='mt-20 flex justify-center '>
+                  <Link href={`/job/${job.id}/apply`}>
+                    <button className=' border  px-8 py-2 mt-0  font-bold rounded-full bg-black text-white '>
+                      Apply to this job
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

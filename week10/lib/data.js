@@ -111,3 +111,26 @@ export const getUser = async (id, prisma) => {
 
   return jobs
 }
+/**
+ * Me devuelve los trabajos a los que me postule. Esta información estará
+ * dentro del dashboard del usuario.
+ * @param {*} user_id id del usuario
+ * @param {*} prisma 
+ * @returns todos los trabajos a los que se postulo el usuario
+ */
+export const getApplications = async (user_id, prisma) => {
+  const applications = await prisma.application.findMany({
+    where: { authorId: user_id },
+    orderBy: [
+      {
+        id: 'desc',
+      },
+    ],
+    include: {
+      author: true,
+      job: true,
+    },
+  })
+
+  return applications
+}

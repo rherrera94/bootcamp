@@ -23,6 +23,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Job         Job[]
+  applications Application[]
 
 }
 
@@ -73,5 +74,13 @@ model Job {
   published    Boolean @default(true)
   author       User     @relation(fields: [authorId], references: [id])
   authorId     String
+  applications Application[]
 }
-
+model Application {
+  id          Int    @id @default(autoincrement())
+  coverletter String
+  job         Job    @relation(fields: [jobId], references: [id])
+  jobId       Int
+  author      User   @relation(fields: [authorId], references: [id])
+  authorId    String
+}

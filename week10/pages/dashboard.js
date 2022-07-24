@@ -5,7 +5,6 @@ import Jobs from 'components/Jobs'
 
 export default function Dashboard({ jobs, user }) {
     const { data: session, status } = useSession()
-
     return (
       <div className='mt-10'>
         <div className='text-center p-4 m-4'>
