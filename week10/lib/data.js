@@ -134,3 +134,27 @@ export const getApplications = async (user_id, prisma) => {
 
   return applications
 }
+/**
+ * Se precisa saber si el usuario ya aplico para el trabajo
+ * @param {*} user_id id de usuario
+ * @param {*} job_id id de trabajo
+ * @param {*} prisma 
+ * @returns devuelve true si ya se aplico y sino false 
+ */
+export const alreadyApplied = async (user_id, job_id, prisma) => {
+  const applications = await prisma.application.findMany({
+    where: {
+      authorId: user_id,
+      jobId: parseInt(job_id),
+    },
+    include: {
+      author: true,
+    },
+  })
+
+  if (applications.length > 0) {
+    return true
+  }
+
+  return false
+}
