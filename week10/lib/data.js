@@ -94,7 +94,8 @@ export const getUser = async (id, prisma) => {
  * activos sino tambien los demas
  * @param {*} user_id La empresa que publico los anuncios
  * @param {*} prisma 
- * @returns Array con los anuncios sin distinguir la situacion de publicacion
+ * @returns Array con los anuncios sin distinguir la situacion de publicacion, es importante
+ * señalar que tambien devolvera las personas que se enrolaron en el anuncio
  */
  export const getJobsPosted = async (user_id, prisma) => {
   const jobs = await prisma.job.findMany({
@@ -108,7 +109,11 @@ export const getUser = async (id, prisma) => {
       author: true,
     },
   })
-
+  await Promise.all(
+    jobs.map(
+      async (job) => (job.applications = await getJobApplications(job, prisma))
+    )
+  )
   return jobs
 }
 /**
@@ -157,4 +162,26 @@ export const alreadyApplied = async (user_id, job_id, prisma) => {
   }
 
   return false
+}
+/**
+ * Esta funcion no se exporta ya que se usara internamente
+ * @param {*} job 
+ * @param {*} prisma 
+ * @returns devuelve todas las aplicaciones a un cierto trabajo
+ */
+const getJobApplications = async (job, prisma) => {
+  const applications = await prisma.application.findMany({
+    where: { jobId: job.id },
+    orderBy: [
+      {
+        id: 'desc',
+      },
+    ],
+    include: {
+      author: true,
+      job: true,
+    },
+  })
+
+  return applications
 }
